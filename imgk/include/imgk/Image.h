@@ -1,11 +1,16 @@
 //
 // Created by Hossam Samir on 05/09/2023.
 //
-#include "stb_image.h"
-
 #ifndef IMGK_IMAGE_H
 #define IMGK_IMAGE_H
 
+#include <cstdio>
+#include <cstdint>
+
+enum ImageType
+{
+PNG, JPG, BMP, TGA
+};
 
 struct Image {
     uint8_t *data;
@@ -20,11 +25,13 @@ struct Image {
 
     Image(const Image &);
 
-    bool read();
-
-    bool write();
-
     ~Image();
+
+    bool read(const char* filename);
+
+    bool write(const char* filename);
+
+    ImageType Image::getFileType(const char* filename);
 
 };
 
