@@ -26,7 +26,7 @@ Image::Image(int w, int h, int channels) : w(w), h(h), channels(channels) {
     data = new uint8_t[size];
 }
 
-Image::Image(const Image &img) : Image(img.w, img.h,img.channels) {
+Image::Image(const Image &img) : Image(img.w, img.h, img.channels) {
     std::memcpy(data, img.data, size);
 }
 
@@ -72,4 +72,30 @@ ImageType Image::getFileType(const char *filename) {
         else if (strcmp(ext, ".tga") == 0)
             return TGA;
     return PNG;
+}
+
+Image &Image::grayscale_avg() {
+    // (r+g+b) /3
+    if (channels < 3)
+        printf("Image %p has less than 3 channels, it assumed to be already gray scale", this);
+    else {
+        for (int i = 0; i < size; i += channels) {
+            int gray = (data[i] + data[i + 1] + data[i + 2] / 3);
+            memset(data + i, gray, 3);
+        }
+    }
+    return *this;
+}
+
+// reference https://en.wikipedia.org/wiki/Grayscale
+Image &Image::grayscale_lum() {
+    if (channels < 3) {
+        printf("Image %p has less than 3 channels, it assumed to be already gray scale", this);
+    } else {
+        for (int i = 0; i < size; i += channels) {
+            int gray = 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
+            memset(data + i, gray, 3);
+        }
+    }
+    return *this;
 }

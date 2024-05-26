@@ -7,9 +7,8 @@
 #include <cstdio>
 #include <cstdint>
 
-enum ImageType
-{
-PNG, JPG, BMP, TGA
+enum ImageType {
+    PNG, JPG, BMP, TGA
 };
 
 struct Image {
@@ -27,11 +26,15 @@ struct Image {
 
     ~Image();
 
-    bool read(const char* filename);
+    bool read(const char *filename);
 
-    bool write(const char* filename);
+    bool write(const char *filename);
 
-    ImageType Image::getFileType(const char* filename);
+    ImageType Image::getFileType(const char *filename);
+
+    Image &grayscale_avg();
+
+    Image &grayscale_lum();
 
 };
 
