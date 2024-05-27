@@ -26,8 +26,23 @@ int main() {
 //    gray_lum.write("gray_lum.png");
 
 //!  test color mask
-    Image test("C:/projects/imgk/resources/flower.jpg");
-    test.colorMask(0, 0, 1);
-    test.write("blue.png");
-    return 0;
+//    Image test("C:/projects/imgk/resources/flower.jpg");
+//    test.colorMask(0, 0, 1);
+//    test.write("blue.png");
+//    return 0;
+
+//! test diff Map
+//    Image test1("C:/projects/imgk/resources/flower.jpg");
+//    Image test2("C:/projects/imgk/resources/cat.jpg");
+//    test1.diffmap(test2);
+//    test1.write("diff.png");
+
+    //! test diffmap with scale
+    Image test1("C:/projects/imgk/resources/flower.jpg");
+    Image test2("C:/projects/imgk/resources/flower.jpg");
+    test2.data[100] += 1;
+    test1.diffmap_scale(test2, 0);
+    test1.write("diff.png");
+
+
 }

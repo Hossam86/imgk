@@ -6,7 +6,9 @@
 
 #include <cstdio>
 #include <cstdint>
+#include <cmath>
 
+#define BYTE_BOUND(value) value<0 ? 0:(value>255? 255 :value)
 enum ImageType {
     PNG, JPG, BMP, TGA
 };
@@ -37,6 +39,10 @@ struct Image {
     Image &grayscale_lum();
 
     Image &colorMask(float r, float g, float b);
+
+    Image &diffmap(Image &imag);
+
+    Image &diffmap_scale(Image &img, uint8_t scl = 0);
 };
 
 
