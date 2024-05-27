@@ -26,8 +26,18 @@ int main() {
 //    gray_lum.write("gray_lum.png");
 
 //!  test color mask
+//    Image test("C:/projects/imgk/resources/flower.jpg");
+//    test.colorMask(0, 0, 1);
+//    test.write("blue.png");
+//    return 0;
+
+//! test encoding and decoding
     Image test("C:/projects/imgk/resources/flower.jpg");
-    test.colorMask(0, 0, 1);
-    test.write("blue.png");
+    test.encodeMessage("Msg");
+    char buffer[256] = {0};
+    size_t len = 0;
+    test.decodeMessage(buffer, &len);
+    printf("Message: %s(%zu)\n", buffer, len);
     return 0;
+
 }
