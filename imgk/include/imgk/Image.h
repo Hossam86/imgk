@@ -58,6 +58,8 @@ struct Image {
 
     Image &flipY();
 
+    Image overlay(const Image &image, int x, int y);
+
 };
 
 #endif //IMGK_IMAGE_H

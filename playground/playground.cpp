@@ -73,10 +73,17 @@ int main() {
 //    test1.write("blurred.png");
 
 //! test flipping
+//    Image test1("C:/projects/imgk/resources/egypt.jpg");
+//    test1.flipX();
+//    test1.write("flipped_X.png");
+//    test1.flipY();
+//    test1.write("flipped_Y.png");
+
+//! test overlay
     Image test1("C:/projects/imgk/resources/egypt.jpg");
-    test1.flipX();
-    test1.write("flipped_X.png");
-    test1.flipY();
-    test1.write("flipped_Y.png");
+    Image logo ("C:/projects/imgk/resources/logo.png");
+    test1.overlay(logo, 20,20);
+    test1.write("overlay.png");
+
     return 0;
 }
