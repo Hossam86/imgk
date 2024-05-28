@@ -8,6 +8,9 @@
 #include <cstdint>
 #include <cmath>
 
+
+#define STEG_HEADER_SIZE sizeof(uint32_t) * 8
+
 #define BYTE_BOUND(value) value<0 ? 0:(value>255? 255 :value)
 enum ImageType {
     PNG, JPG, BMP, TGA
@@ -40,6 +43,10 @@ struct Image {
 
     Image &colorMask(float r, float g, float b);
 
+    Image &decodeMessage(char *buffer, size_t *messageLength);
+
+    Image &encodeMessage(const char *message);
+
     Image &diffmap(Image &imag);
 
     Image &diffmap_scale(Image &img, uint8_t scl = 0);
@@ -47,6 +54,5 @@ struct Image {
     Image &
     std_convolve_clamp_to_0(uint8_t channel, uint32_t ker_w, uint32_t ker_h, double *ker, uint32_t cr, uint32_t cc);
 };
-
 
 #endif //IMGK_IMAGE_H

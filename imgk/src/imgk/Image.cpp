@@ -113,6 +113,35 @@ Image &Image::colorMask(float r, float g, float b) {
     return *this;
 }
 
+Image &Image::encodeMessage(const char *message) {
+    uint32_t len = strlen(message) * 8;
+    if (len + STEG_HEADER_SIZE > size) {
+        printf("error: this message is too large (%lld bits / %zu bits)", len + STEG_HEADER_SIZE, size);
+        return *this;
+    }
+    for (uint8_t i = 0; i < STEG_HEADER_SIZE; ++i) {
+        data[i] &= 0xFE;
+        data[i] |= (len >> (STEG_HEADER_SIZE - 1 - i)) & 1UL;
+    }
+    for (uint32_t i = 0; i < len; ++i) {
+        data[i + STEG_HEADER_SIZE] &= 0xFE;
+        data[i + STEG_HEADER_SIZE] |= (message[i / 8] >> ((len - 1 - i) % 8)) & 1;
+    }
+
+    return *this;
+}
+
+Image &Image::decodeMessage(char *buffer, size_t *messageLength) {
+    uint32_t len = 0;
+    for (int i = 0; i < STEG_HEADER_SIZE; ++i) {
+        len = (len << 1) | (data[i] & 1);
+    }
+    *messageLength = len / 8;
+    for (uint32_t i = 0; i < len; ++i) {
+        buffer[i / 8] = (buffer[i / 8] << 1) | (data[i + STEG_HEADER_SIZE] & 1);
+    }
+    return *this;
+}
 Image &Image::diffmap(Image &imag) {
     int compare_width = fmin(w, imag.w);
     int compare_height = fmin(h, imag.h);
@@ -182,6 +211,3 @@ Image::std_convolve_clamp_to_0(uint8_t channel, uint32_t ker_w, uint32_t ker_h, 
     delete[] new_data;
     return *this;
 }
-
-Im
-

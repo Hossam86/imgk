@@ -31,6 +31,15 @@ int main() {
 //    test.write("blue.png");
 //    return 0;
 
+//! test encoding and decoding
+    Image test("C:/projects/imgk/resources/flower.jpg");
+    test.encodeMessage("Msg");
+    char buffer[256] = {0};
+    size_t len = 0;
+    test.decodeMessage(buffer, &len);
+    printf("Message: %s(%zu)\n", buffer, len);
+    return 0;
+
 //! test diff Map
 //    Image test1("C:/projects/imgk/resources/flower.jpg");
 //    Image test2("C:/projects/imgk/resources/cat.jpg");
