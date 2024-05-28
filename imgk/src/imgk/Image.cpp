@@ -41,7 +41,7 @@ bool Image::read(const char *filename) {
 }
 
 bool Image::write(const char *filename) {
-    ImageType type = getFileType(filename);
+    ImageType type = get_file_type(filename);
     int success;
     switch (type) {
         case PNG:
@@ -60,7 +60,7 @@ bool Image::write(const char *filename) {
     return success != 0;
 }
 
-ImageType Image::getFileType(const char *filename) {
+ImageType Image::get_file_type(const char *filename) {
     const char *ext = std::strchr(filename, '.');
     if (ext != nullptr)
         if (strcmp(ext, ".png") == 0)
@@ -148,4 +148,40 @@ Image &Image::diffmap_scale(Image &img, uint8_t scl) {
     }
     return *this;
 }
+
+Image &
+Image::std_convolve_clamp_to_0(uint8_t channel, uint32_t ker_w, uint32_t ker_h, double *ker, uint32_t cr,
+                               uint32_t cc) {
+
+    auto new_data = new uint8_t[w * h];
+    uint64_t center = cr * ker_w + cc;
+    for (uint64_t k = channel; k < size; k += channels) {
+        double c = 0;
+        for (long i = -((long) cr); i < (long) ker_h - cr; ++i) {
+            long row = ((long) k / channels) / w - i;
+            if (row < 0) {
+                row = row % h + h;
+            } else if (row > h - 1) {
+                row %= h;
+            }
+            for (long j = -((long) cc); j < (long) ker_w - cc; ++j) {
+                long col = ((long) k / channels) % w - j;
+                if (col < 0) {
+                    col = col % w + w;
+                } else if (col > w - 1) {
+                    col %= w;
+                }
+                c += ker[center + i * (long) ker_w + j] * data[(row * w + col) * channels + channel];
+            }
+        }
+        new_data[k / channels] = (uint8_t) BYTE_BOUND(round(c));
+    }
+    for (uint64_t k = channel; k < size; k += channels) {
+        data[k] = new_data[k / channels];
+    }
+    delete[] new_data;
+    return *this;
+}
+
+Im
 

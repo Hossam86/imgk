@@ -37,12 +37,31 @@ int main() {
 //    test1.diffmap(test2);
 //    test1.write("diff.png");
 
-    //! test diffmap with scale
+//! test diffmap with scale
+//    Image test1("C:/projects/imgk/resources/flower.jpg");
+//    Image test2("C:/projects/imgk/resources/flower.jpg");
+//    test2.data[100] += 1;
+//    test1.diffmap_scale(test2, 0);
+//    test1.write("diff.png");
+
+//! test imag convolution
+
     Image test1("C:/projects/imgk/resources/flower.jpg");
-    Image test2("C:/projects/imgk/resources/flower.jpg");
-    test2.data[100] += 1;
-    test1.diffmap_scale(test2, 0);
-    test1.write("diff.png");
 
+    double ker_emboss[] = {
+            -2 / 9.0, -1 / 9.0, 0,
+            -1 / 9.0, 1 / 9.0, 1 / 9.0,
+            0, 1 / 9.0, 2 / 9.0,
+    };
+    double ker_gaussian_blur[] = {
+            1 / 16.0, 2 / 16.0, 1 / 16.0,
+            2 / 16.0, 4 / 16.0, 2 / 16.0,
+            1 / 16.0, 2 / 16.0, 1 / 16.0,
+    };
 
+    test1.std_convolve_clamp_to_0(0, 3, 3, ker_emboss, 1, 1);
+    test1.std_convolve_clamp_to_0(1, 3, 3, ker_emboss, 1, 1);
+    test1.std_convolve_clamp_to_0(2, 3, 3, ker_emboss, 1, 1);
+
+    test1.write("blurred.png");
 }
