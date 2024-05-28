@@ -53,6 +53,11 @@ struct Image {
 
     Image &
     std_convolve_clamp_to_0(uint8_t channel, uint32_t ker_w, uint32_t ker_h, double *ker, uint32_t cr, uint32_t cc);
+
+    Image &flipX();
+
+    Image &flipY();
+
 };
 
 #endif //IMGK_IMAGE_H

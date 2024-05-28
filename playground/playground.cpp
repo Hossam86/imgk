@@ -32,13 +32,12 @@ int main() {
 //    return 0;
 
 //! test encoding and decoding
-    Image test("C:/projects/imgk/resources/flower.jpg");
-    test.encodeMessage("Msg");
-    char buffer[256] = {0};
-    size_t len = 0;
-    test.decodeMessage(buffer, &len);
-    printf("Message: %s(%zu)\n", buffer, len);
-    return 0;
+//    Image test("C:/projects/imgk/resources/flower.jpg");
+//    test.encodeMessage("Msg");
+//    char buffer[256] = {0};
+//    size_t len = 0;
+//    test.decodeMessage(buffer, &len);
+//    printf("Message: %s(%zu)\n", buffer, len);
 
 //! test diff Map
 //    Image test1("C:/projects/imgk/resources/flower.jpg");
@@ -54,23 +53,30 @@ int main() {
 //    test1.write("diff.png");
 
 //! test imag convolution
+//    Image test1("C:/projects/imgk/resources/flower.jpg");
+//
+//    double ker_emboss[] = {
+//            -2 / 9.0, -1 / 9.0, 0,
+//            -1 / 9.0, 1 / 9.0, 1 / 9.0,
+//            0, 1 / 9.0, 2 / 9.0,
+//    };
+//    double ker_gaussian_blur[] = {
+//            1 / 16.0, 2 / 16.0, 1 / 16.0,
+//            2 / 16.0, 4 / 16.0, 2 / 16.0,
+//            1 / 16.0, 2 / 16.0, 1 / 16.0,
+//    };
+//
+//    test1.std_convolve_clamp_to_0(0, 3, 3, ker_emboss, 1, 1);
+//    test1.std_convolve_clamp_to_0(1, 3, 3, ker_emboss, 1, 1);
+//    test1.std_convolve_clamp_to_0(2, 3, 3, ker_emboss, 1, 1);
+//
+//    test1.write("blurred.png");
 
-    Image test1("C:/projects/imgk/resources/flower.jpg");
-
-    double ker_emboss[] = {
-            -2 / 9.0, -1 / 9.0, 0,
-            -1 / 9.0, 1 / 9.0, 1 / 9.0,
-            0, 1 / 9.0, 2 / 9.0,
-    };
-    double ker_gaussian_blur[] = {
-            1 / 16.0, 2 / 16.0, 1 / 16.0,
-            2 / 16.0, 4 / 16.0, 2 / 16.0,
-            1 / 16.0, 2 / 16.0, 1 / 16.0,
-    };
-
-    test1.std_convolve_clamp_to_0(0, 3, 3, ker_emboss, 1, 1);
-    test1.std_convolve_clamp_to_0(1, 3, 3, ker_emboss, 1, 1);
-    test1.std_convolve_clamp_to_0(2, 3, 3, ker_emboss, 1, 1);
-
-    test1.write("blurred.png");
+//! test flipping
+    Image test1("C:/projects/imgk/resources/egypt.jpg");
+    test1.flipX();
+    test1.write("flipped_X.png");
+    test1.flipY();
+    test1.write("flipped_Y.png");
+    return 0;
 }
