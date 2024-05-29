@@ -80,10 +80,14 @@ int main() {
 //    test1.write("flipped_Y.png");
 
 //! test overlay
-    Image test1("C:/projects/imgk/resources/egypt.jpg");
-    Image logo ("C:/projects/imgk/resources/logo.png");
-    test1.overlay(logo, 20,20);
-    test1.write("overlay.png");
+//    Image test1("C:/projects/imgk/resources/egypt.jpg");
+//    Image logo ("C:/projects/imgk/resources/logo.png");
+//    test1.overlay(logo, 20,20);
+//    test1.write("overlay.png");
 
+    //! test cropping
+    Image test1("C:/projects/imgk/resources/egypt.jpg");
+    test1.crop(400, 400, 400, 400);
+    test1.write("cropped.png");
     return 0;
 }

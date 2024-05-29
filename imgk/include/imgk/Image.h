@@ -60,6 +60,8 @@ struct Image {
 
     Image overlay(const Image &image, int x, int y);
 
+    Image &Image::crop(uint16_t cx, uint16_t cy, uint16_t cw, uint16_t ch);
+
 };
 
 #endif //IMGK_IMAGE_H

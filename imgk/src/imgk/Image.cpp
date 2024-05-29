@@ -280,9 +280,25 @@ Image Image::overlay(const Image &source, int x, int y) {
                     if (channels > 3) { dstPx[3] = (uint8_t) BYTE_BOUND(outAlpha * 255.f); }
                 }
             }
-
         }
-
     }
+    return *this;
+}
+
+Image &Image::crop(uint16_t cx, uint16_t cy, uint16_t cw, uint16_t ch) {
+    uint8_t *cropped_image = new uint8_t[cw * ch * channels];
+    memset(cropped_image, 0, size);
+    for (int y = 0; y < ch; ++y) {
+        if (y + cy >= h) { break; };
+        for (uint16_t x = 0; x < cw; ++x) {
+            memcpy(&cropped_image[(x + y * cw) * channels], &data[(x + cx + (y + cy) * w) * channels], channels);
+        }
+    }
+    w = cw;
+    h = ch;
+    size = w * h * channels;
+    delete[] data;
+    data = cropped_image;
+    cropped_image = nullptr;
     return *this;
 }
