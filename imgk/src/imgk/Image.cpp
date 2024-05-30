@@ -302,3 +302,20 @@ Image &Image::crop(uint16_t cx, uint16_t cy, uint16_t cw, uint16_t ch) {
     cropped_image = nullptr;
     return *this;
 }
+
+Image &Image::add_alpha() {
+    if (channels < 4) {
+        channels = 4;
+        auto *result = new uint8_t[w * h * channels];
+        size_t newsize = w * h * channels;
+        memset(result, 100, newsize);
+        size_t j = 0;
+        for (size_t i = 0; i < size; i += 3) {
+            memcpy(result + j, data + i, 3);
+            j += 4;
+        }
+        data = nullptr;
+        data = result;
+    }
+    return *this;
+}

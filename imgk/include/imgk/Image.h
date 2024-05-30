@@ -62,6 +62,7 @@ struct Image {
 
     Image &Image::crop(uint16_t cx, uint16_t cy, uint16_t cw, uint16_t ch);
 
+    Image& add_alpha();
 };
 
 #endif //IMGK_IMAGE_H

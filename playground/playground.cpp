@@ -86,8 +86,13 @@ int main() {
 //    test1.write("overlay.png");
 
     //! test cropping
+//    Image test1("C:/projects/imgk/resources/egypt.jpg");
+//    test1.crop(400, 400, 400, 400);
+//    test1.write("cropped.png");
+
+    // test background remove
     Image test1("C:/projects/imgk/resources/egypt.jpg");
-    test1.crop(400, 400, 400, 400);
-    test1.write("cropped.png");
+    test1.add_alpha();
+    test1.write("removedbakeground.png");
     return 0;
 }
